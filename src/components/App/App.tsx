@@ -13,7 +13,6 @@ export default function App() {
   const [movies, setMovies] = useState<Movie[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isError, setIsError] = useState<boolean>(false)
-  const [isOpen, setIsOpen] = useState(false)
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null)
   
 
@@ -50,8 +49,8 @@ setIsLoading(false);
   <Toaster />
   {isLoading && <Loader/>}
   {isError && <ErrorMessage/>}
- {movies.length > 0 && <MovieGrid onSelect={(movie) => {setIsOpen(true); setSelectedMovie(movie)}} movies ={movies} />}
- {isOpen && <MovieModal onClose={() => {setIsOpen(false); setSelectedMovie(null)}}  movie={selectedMovie}/>}  
+  {movies.length > 0 && <MovieGrid onSelect={(movie) => {setSelectedMovie(movie)}} movies ={movies} />}
+  {selectedMovie !== null && <MovieModal onClose={() => {setSelectedMovie(null)}}  movie={selectedMovie}/>}  
     </>
   )
 }
