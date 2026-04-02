@@ -11,7 +11,7 @@ export default function SearchBar({onSubmit}:SearchBarProps) {
   const handleSubmit = (formData : FormData) => {
    const query = formData.get('query') as string;
    if (query.trim() ==='') {
- return toast("Please enter your search query.",
+ toast("Please enter your search query.",
       {
     style: {
       borderRadius: '10px',
@@ -19,9 +19,10 @@ export default function SearchBar({onSubmit}:SearchBarProps) {
       color: '#fff',
     },
   })
+ return;
 }
 onSubmit(query);
-    }
+}
  return (
  <header className={styles.header}>
   <div className={styles.container}>
