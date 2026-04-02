@@ -10,7 +10,7 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import MovieModal from '../MovieModal/MovieModal';
 
 export default function App() {
-  const [instaillMovies, setInstaillMovies] = useState<Movie[]>([])
+  const [movies, setMovies] = useState<Movie[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isError, setIsError] = useState<boolean>(false)
   const [isOpen, setIsOpen] = useState(false)
@@ -18,11 +18,13 @@ export default function App() {
   
 
 
-const feachCard = async(search : string) => {
+const fetchCard = async(search : string) => {
   try { 
   setIsLoading(true);
+  setIsError(false);
+  setMovies([])
    const searchMovie = await fetchMovies(search);
-   setInstaillMovies(searchMovie)
+   setMovies(searchMovie)
     if (searchMovie.length === 0) {
       toast("No movies found for your request.",
       {
@@ -34,22 +36,21 @@ const feachCard = async(search : string) => {
   })
 }   
 } catch {
-setIsLoading(true);
+setIsLoading(false);
 setIsError(true);
   }finally{
 setIsLoading(false);
-setIsError(false);
   }
 }
 
 
   return(
     <>
-<SearchBar onSubmit={feachCard}/>
+<SearchBar onSubmit={fetchCard}/>
   <Toaster />
   {isLoading && <Loader/>}
   {isError && <ErrorMessage/>}
- {instaillMovies.length > 0 && <MovieGrid onSelect={(movie) => {setIsOpen(true); setSelectedMovie(movie)}} movies ={instaillMovies} />}
+ {movies.length > 0 && <MovieGrid onSelect={(movie) => {setIsOpen(true); setSelectedMovie(movie)}} movies ={movies} />}
  {isOpen && <MovieModal onClose={() => {setIsOpen(false); setSelectedMovie(null)}}  movie={selectedMovie}/>}  
     </>
   )

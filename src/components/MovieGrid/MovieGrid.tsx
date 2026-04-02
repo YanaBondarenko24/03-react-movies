@@ -20,6 +20,4 @@ export default function MovieGrid({onSelect, movies}: MovieGridProps ){
     </div>
   </li>)}
 </ul>)
-
-
 }
